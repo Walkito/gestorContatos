@@ -1,15 +1,17 @@
 package br.com.saudeVital.salutem.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.hibernate.annotations.Comment;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
-public class Paciente {
+public class Pessoa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,20 +36,32 @@ public class Paciente {
     @Size(max = 35)
     private String sobrenome;
 
-    @Column(columnDefinition = "DATE")
+    @Column(columnDefinition = "DATE", nullable = false)
     @NotNull
     private LocalDate dataNascimento;
 
-    public Paciente(){
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
+    private List<Contato> contatos;
+
+    public Pessoa(){
 
     }
 
-    public Paciente(String nome, String nomeMeio, String sobrenome, String cpf, LocalDate dataNascimento) {
+    public Pessoa(String nome, String nomeMeio, String sobrenome, String cpf, LocalDate dataNascimento) {
         this.nome = nome;
         this.nomeMeio = nomeMeio;
         this.sobrenome = sobrenome;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
+    }
+
+    public List<Contato> getContatos() {
+        return contatos;
+    }
+
+    public void setContatos(Contato contato) {
+        contatos.add(contato);
     }
 
     public String getNomeMeio() {
