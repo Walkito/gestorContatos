@@ -3,7 +3,6 @@ package br.com.gestorContatos.salutem.service;
 import br.com.gestorContatos.salutem.Utils;
 import br.com.gestorContatos.salutem.model.entities.Contato;
 import br.com.gestorContatos.salutem.model.entities.Pessoa;
-import br.com.gestorContatos.salutem.model.entities.PessoaWrapper;
 import br.com.gestorContatos.salutem.model.repositorys.PessoaRepository;
 import br.com.gestorContatos.salutem.model.specifications.PessoaSpecifications;
 import org.springframework.beans.BeanUtils;
@@ -13,7 +12,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 @Service
