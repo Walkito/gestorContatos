@@ -1,0 +1,39 @@
+<div class="div-filtros">
+    <label for="id">Id</label> <input id="id" type="number" [(ngModel)]="id" (input)="popularDadosFiltro($event,'id')" placeholder="Id">
+    <label for="nome">Nome</label> <input id="nome" type="text" [(ngModel)]="nome" (input)="popularDadosFiltro($event,'nome')" placeholder="Nome">
+    <label for="nomeMeio">Nome do Meio</label> <input id="nomeMeio" type="text" [(ngModel)]="nomeMeio" (input)="popularDadosFiltro($event,'nomeMeio')" placeholder="Nome do Meio">
+    <label for="sobrenome">Sobrenome</label> <input id="sobrenome" type="text" [(ngModel)]="sobrenome" (input)="popularDadosFiltro($event,'sobrenome')" placeholder="Sobrenome">
+    <label for="cpf">CPF</label> <input id="cpf" type="text" [(ngModel)]="cpf" (input)="popularDadosFiltro($event,'cpf')" placeholder="CPF">
+    <label for="dataNascimento">Data de Nascimento</label> <input id="dataNascimento" type="date" [(ngModel)]="dataNascimento" (input)="popularDadosFiltro($event,'dataNascimento')" placeholder="Data">
+    <label for="tamanhoPagina">Pessoas por Página</label> <input id="tamanhoPagina" type="number" [(ngModel)]="tamanhoPagina" (input)="popularDadosFiltro($event,'tamanhoPagina')" placeholder="10">
+    <button (click)="getPessoaFiltrada(true)">Filtrar</button>
+</div>
+<div class="div-table-pessoas">
+    <table class="table-pessoas">
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Data</th>
+        </tr>
+        <tr *ngFor="let pessoa of pessoas">
+            <td> {{pessoa.id}} </td>
+            <td> <a routerLink="pessoa">{{pessoa.nome}} {{pessoa.nomeMeio}} {{pessoa.sobrenome}}</a></td>
+            <td> {{pessoa.cpf}} </td>
+            <td> {{pessoa.dataNascimento}} </td>
+        </tr>
+    </table>
+</div>
+<div class="div-paginas">
+    <p>&lt;</p>
+    <p class="pagina-p" (click)="irPagina(pagina,$event)" *ngFor="let pagina of paginas; let i = index" [ngClass]="{'pag-sublinhada': pagina == 1}"> 
+        {{pagina}}
+    </p>
+    <p>
+        ... 
+    </p>
+    <p class="pagina-p" (click)="irPagina(paginas[paginas.length -1],$event)">
+        {{paginas[paginas.length -1]}}
+    </p>
+    <p>&gt;</p>
+</div>

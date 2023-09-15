@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.saudeVital.salutem</groupId>
-	<artifactId>Saude-Vital</artifactId>
+	<artifactId>Gestor-Contatos</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Saude-Vital</name>
 	<description>Teste prático para a vaga de Desenvolvedor Java.</description>
