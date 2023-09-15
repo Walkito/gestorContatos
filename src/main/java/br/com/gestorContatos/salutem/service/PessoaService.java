@@ -54,36 +54,44 @@ public class PessoaService {
         }
     }
 
-    public Pessoa insertPessoa(PessoaWrapper pessoaWrapper){
+    public Pessoa insertPessoa(Pessoa pessoa){
         try {
-            Pessoa pessoa = pessoaWrapper.getPessoa();
-            Contato contato = pessoaWrapper.getContato();
             if(!verificarData(pessoa.getDataNascimento())){
                 return new Pessoa();
             }
             if(!Utils.verificarCPF(pessoa.getCpf())) {
                 return new Pessoa();
             }
-            pessoa.setContatos(contato);
             return repository.save(pessoa);
-
         } catch (Exception e){
             throw e;
         }
     }
 
-    public String updatePessoa(Long id, Pessoa pessoa){
+    public Pessoa updatePessoa(Pessoa pessoa){
         try {
             if(!verificarData(pessoa.getDataNascimento())){
-                return "Data de Nascimento Inválida";
+                return null;
             }
             if(!Utils.verificarCPF(pessoa.getCpf())) {
-                return "CPF Inválido";
+                return null;
             }
-            Pessoa pessoaAtual = repository.searchById(id);
-            BeanUtils.copyProperties(pessoa, pessoaAtual, Utils.getPropriedadesNulas(pessoa));
-            repository.save(pessoaAtual);
-            return "Pessoa Alterado com Sucesso";
+            Pessoa pessoaAtual = repository.searchById(pessoa.getId());
+
+            if (pessoaAtual != null) {
+                BeanUtils.copyProperties(pessoa, pessoaAtual, "contatos");
+                if (pessoa.getContatos() != null) {
+                    pessoaAtual.getContatos().removeIf(contato -> !pessoa.getContatos().contains(contato));
+                    for (Contato novoContato : pessoa.getContatos()) {
+                        if (!pessoaAtual.getContatos().contains(novoContato)) {
+                            pessoaAtual.getContatos().add(novoContato);
+                        }
+                    }
+                } else {
+                    pessoaAtual.getContatos().clear();
+                }
+            }
+            return repository.save(pessoaAtual);
         } catch (Exception e){
             throw e;
         }
@@ -93,6 +101,22 @@ public class PessoaService {
         try {
             repository.deleteById(id);
             return true;
+        } catch (Exception e){
+            throw e;
+        }
+    }
+
+    public Optional<Pessoa> getPessoaById(Long id){
+        try {
+            return repository.findById(id);
+        }catch (Exception e){
+            throw e;
+        }
+    }
+
+    public Pessoa getUltimoIndice(){
+        try{
+            return repository.findTopByOrderByIdDesc();
         } catch (Exception e){
             throw e;
         }
@@ -115,10 +139,6 @@ public class PessoaService {
         } catch (Exception e){
             throw e;
         }
-    }
-
-    private List<Contato> getContatosPessoa(Pessoa pessoa){
-        return pessoa.getContatos();
     }
 
     private boolean verificarData(LocalDate date){

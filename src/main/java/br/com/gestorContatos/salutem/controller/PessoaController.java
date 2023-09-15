@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -20,9 +21,6 @@ public class PessoaController {
 
     @Autowired
     PessoaService service;
-
-    @Autowired
-    PessoaRepository repository;
 
     @GetMapping
     public Iterable<Pessoa> getPessoaFiltrada(@RequestParam(name = "id", defaultValue = "0") Long id,
@@ -36,18 +34,28 @@ public class PessoaController {
         return service.getPessoaFiltrada(id,cpf, nome, nomeMeio, sobrenome, dataNascimento, numPagina, tamanhoPagina);
     }
 
+    @GetMapping("/pessoa")
+    public Optional<Pessoa> getPessoaByID(@RequestParam(name = "id") Long id){
+        return  service.getPessoaById(id);
+    }
+
+    @GetMapping("/pessoa/ultimoId")
+    public Pessoa getUltimoIndice(){
+        return service.getUltimoIndice();
+    }
+
     @PostMapping("/cadastrar")
-    public Pessoa insertPessoa(@RequestBody PessoaWrapper pessoaWrapper){
-        return service.insertPessoa(pessoaWrapper);
+    public Pessoa insertPessoa(@RequestBody @Valid Pessoa pessoa){
+        return service.insertPessoa(pessoa);
     }
 
     @PutMapping("/pessoa/editar")
-    public String updatePessoa(Long id, Pessoa pessoa){
-        return service.updatePessoa(id, pessoa);
+    public Pessoa updatePessoa(@RequestBody @Valid Pessoa pessoa){
+        return service.updatePessoa(pessoa);
     }
 
-    @DeleteMapping("/pessoa/editar")
-    public boolean deletePessoa(Long id){
+    @DeleteMapping("/pessoa/excluir")
+    public boolean deletePessoa(@RequestParam(name = "id") Long id){
         return service.deletePessoa(id);
     }
 

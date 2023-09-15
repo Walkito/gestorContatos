@@ -1,6 +1,7 @@
 package br.com.gestorContatos.salutem.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -41,27 +42,28 @@ public class Pessoa {
     private LocalDate dataNascimento;
 
     @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference
+    @JsonManagedReference
     private List<Contato> contatos = new ArrayList<>();
 
     public Pessoa(){
 
     }
 
-    public Pessoa(String nome, String nomeMeio, String sobrenome, String cpf, LocalDate dataNascimento) {
+    public Pessoa(String nome, String nomeMeio, String sobrenome, String cpf, LocalDate dataNascimento, List<Contato> contatos) {
         this.nome = nome;
         this.nomeMeio = nomeMeio;
         this.sobrenome = sobrenome;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
+        setContatos(contatos);
     }
 
     public List<Contato> getContatos() {
         return contatos;
     }
 
-    public void setContatos(Contato contato) {
-        contatos.add(contato);
+    public void setContatos(List<Contato> contatos) {
+        this.contatos = contatos;
     }
 
     public String getNomeMeio() {

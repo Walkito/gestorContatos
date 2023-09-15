@@ -1,20 +1,22 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams} from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { API_BODY_PATH } from 'src/app/environments/environment';
-import { Observable } from 'rxjs/internal/Observable';
-import { IPessoaArr } from 'src/app/interfaces/IPessoaArr';
- 
+import { IContatoArr } from 'src/app/interfaces/IContatoArr';
+
 @Injectable({
   providedIn: 'root'
 })
-export class PessoaService {
+export class ContatosService {
   private pathBase = API_BODY_PATH;
-  constructor(private http: HttpClient) { }
 
-  getPessoaFiltrada(parametros: { [key: string]: string}): Observable<IPessoaArr>{
+  constructor(private http:HttpClient) { }
+
+
+  getContatoFiltrado(parametros: { [key: string]: string}): Observable<IContatoArr>{
     let params = this.criarParametros(parametros);
 
-    return this.http.get<IPessoaArr>(`${this.pathBase}pessoas`, {params})
+    return this.http.get<IContatoArr>(`${this.pathBase}contatos`, {params})
   }
 
   criarParametros(params: { [key: string]: string}): HttpParams{
@@ -26,5 +28,4 @@ export class PessoaService {
     }
     return parametros;
   }
-
 }

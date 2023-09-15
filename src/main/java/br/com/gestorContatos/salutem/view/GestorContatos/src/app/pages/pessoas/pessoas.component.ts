@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PessoaService } from './service/pessoas.service';
 import { IPessoa } from 'src/app/interfaces/IPessoa';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pessoas',
@@ -20,8 +21,7 @@ export class PessoasComponent implements OnInit {
   paginaAtual: number = 1;
   tamanhoPagina: string = "0";
 
-  
-  constructor(private service:PessoaService){}
+  constructor(private service:PessoaService, private router:Router){}
 
   ngOnInit(): void{
     this.getPessoaFiltrada(true);
@@ -29,6 +29,9 @@ export class PessoasComponent implements OnInit {
 
   async getPessoaFiltrada(botaoFiltrar: boolean){
     botaoFiltrar === true ? this.paginaAtual = 1 : this.paginaAtual;
+    this.id === "" || this.id === null || Number.parseInt(this.id) < 0 ? this.id = '0' : this.id;
+    this.tamanhoPagina === "" || this.tamanhoPagina === null || Number.parseInt(this.tamanhoPagina) < 0 ? this.tamanhoPagina = '0' : this.tamanhoPagina;
+
     const parametros = {
       id: this.id,
       cpf: this.cpf,
@@ -37,7 +40,7 @@ export class PessoasComponent implements OnInit {
       sobrenome: this.sobrenome,
       dataNascimento: this.dataNascimento,
       numPagina: (this.paginaAtual-1).toString(),
-      tamanhoPagina: this.tamanhoPagina.toString()
+      tamanhoPagina: this.tamanhoPagina
     }
 
     this.service.getPessoaFiltrada(parametros).subscribe({
@@ -48,6 +51,7 @@ export class PessoasComponent implements OnInit {
           this.pessoas = pessoas;
         }
         this.formataData()
+        this.formataCPF();
         this.paginas = this.preencherPaginas(pessoas.totalPages);
       },
       error: (error) => console.error(error),
@@ -81,39 +85,16 @@ export class PessoasComponent implements OnInit {
     this.getPessoaFiltrada(false);
   }
 
-  popularDadosFiltro(event: Event, filtro: String){
-    const elemento = event.target as HTMLInputElement;
-    const valor = elemento.value;
-
-    switch(filtro){
-      case 'id':
-        this.id = valor;
-        break;
-      case 'cpf':
-        this.cpf = valor;
-        break;
-      case 'nome':
-        this.nome = valor;
-        break;
-      case 'nomeMeio':
-        this.nomeMeio = valor;
-        break;
-      case 'sobrenome':
-        this.sobrenome = valor;
-        break;
-      case 'dataNascimento':
-        this.dataNascimento = valor;
-        break;
-      case 'tamanhoPagina':
-        this.tamanhoPagina = valor;
-        break;
-    }
-  }
-
   formataData(){
     this.pessoas.forEach((pessoa)=>{
       pessoa.dataNascimento = pessoa.dataNascimento.split('-').reverse().join('-');
       pessoa.dataNascimento = pessoa.dataNascimento.replaceAll('-','/');
+    })
+  }
+
+  formataCPF(){
+    this.pessoas.forEach((pessoa) =>{
+      pessoa.cpf = pessoa.cpf.substring(0, 3) + '.' + pessoa.cpf.substring(3, 6) + '.' + pessoa.cpf.substring(6, 9) + '-' + pessoa.cpf.substring(9);
     })
   }
 }

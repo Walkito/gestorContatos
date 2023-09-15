@@ -1,5 +1,6 @@
 package br.com.gestorContatos.salutem.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -39,15 +40,14 @@ public class Contato {
 
     @ManyToOne
     @JoinColumn(name = "pessoa_id")
-    @JsonManagedReference
+    @JsonBackReference
     private Pessoa pessoa;
 
     public Contato(){
 
     }
 
-    public Contato(Pessoa pessoa, String nome, String cpf, String nomeMeio, String sobrenome, String telefone, String email) {
-        this.pessoa = pessoa;
+    public Contato(String nome, String cpf, String nomeMeio, String sobrenome, String telefone, String email) {
         this.nome = nome;
         this.cpf = cpf;
         this.nomeMeio = nomeMeio;

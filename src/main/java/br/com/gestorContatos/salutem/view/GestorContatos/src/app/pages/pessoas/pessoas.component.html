@@ -1,12 +1,14 @@
+<h2>Pessoas</h2>
 <div class="div-filtros">
-    <label for="id">Id</label> <input id="id" type="number" [(ngModel)]="id" (input)="popularDadosFiltro($event,'id')" placeholder="Id">
-    <label for="nome">Nome</label> <input id="nome" type="text" [(ngModel)]="nome" (input)="popularDadosFiltro($event,'nome')" placeholder="Nome">
-    <label for="nomeMeio">Nome do Meio</label> <input id="nomeMeio" type="text" [(ngModel)]="nomeMeio" (input)="popularDadosFiltro($event,'nomeMeio')" placeholder="Nome do Meio">
-    <label for="sobrenome">Sobrenome</label> <input id="sobrenome" type="text" [(ngModel)]="sobrenome" (input)="popularDadosFiltro($event,'sobrenome')" placeholder="Sobrenome">
-    <label for="cpf">CPF</label> <input id="cpf" type="text" [(ngModel)]="cpf" (input)="popularDadosFiltro($event,'cpf')" placeholder="CPF">
-    <label for="dataNascimento">Data de Nascimento</label> <input id="dataNascimento" type="date" [(ngModel)]="dataNascimento" (input)="popularDadosFiltro($event,'dataNascimento')" placeholder="Data">
-    <label for="tamanhoPagina">Pessoas por Página</label> <input id="tamanhoPagina" type="number" [(ngModel)]="tamanhoPagina" (input)="popularDadosFiltro($event,'tamanhoPagina')" placeholder="10">
+    <label for="id">Id</label> <input id="id" type="number" min="0"  [(ngModel)]="id" (keydown.enter)="getPessoaFiltrada(true)" placeholder="Id">
+    <label for="nome">Nome</label> <input id="nome" type="text" [(ngModel)]="nome" (keydown.enter)="getPessoaFiltrada(true)" placeholder="Nome">
+    <label for="nomeMeio">Nome do Meio</label> <input id="nomeMeio" type="text" [(ngModel)]="nomeMeio" (keydown.enter)="getPessoaFiltrada(true)" placeholder="Nome do Meio">
+    <label for="sobrenome">Sobrenome</label> <input id="sobrenome" type="text" [(ngModel)]="sobrenome" (keydown.enter)="getPessoaFiltrada(true)" placeholder="Sobrenome">
+    <label for="cpf">CPF</label> <input id="cpf" type="text" [(ngModel)]="cpf" (keydown.enter)="getPessoaFiltrada(true)" placeholder="CPF">
+    <label for="dataNascimento">Data de Nascimento</label> <input id="dataNascimento" type="date" [(ngModel)]="dataNascimento" (keydown.enter)="getPessoaFiltrada(true)" placeholder="Data">
+    <label for="tamanhoPagina">Pessoas por Página</label> <input id="tamanhoPagina" min="0"  type="number" [(ngModel)]="tamanhoPagina" (keydown.enter)="getPessoaFiltrada(true)" placeholder="10">
     <button (click)="getPessoaFiltrada(true)">Filtrar</button>
+    <a [routerLink]="['/pessoas/pessoa',0]">Cadastrar Pessoa</a>
 </div>
 <div class="div-table-pessoas">
     <table class="table-pessoas">
@@ -18,7 +20,7 @@
         </tr>
         <tr *ngFor="let pessoa of pessoas">
             <td> {{pessoa.id}} </td>
-            <td> <a routerLink="pessoa">{{pessoa.nome}} {{pessoa.nomeMeio}} {{pessoa.sobrenome}}</a></td>
+            <td> <a [routerLink]="['/pessoas/pessoa', pessoa.id]">{{pessoa.nome}} {{pessoa.nomeMeio}} {{pessoa.sobrenome}}</a></td>
             <td> {{pessoa.cpf}} </td>
             <td> {{pessoa.dataNascimento}} </td>
         </tr>

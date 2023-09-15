@@ -13,4 +13,6 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long>, JpaSpecif
     public Pessoa searchById(@Param("pId") Long id);
 
     public Optional<Pessoa> findByCpf(String cpf);
+
+    public Pessoa findTopByOrderByIdDesc();
 }

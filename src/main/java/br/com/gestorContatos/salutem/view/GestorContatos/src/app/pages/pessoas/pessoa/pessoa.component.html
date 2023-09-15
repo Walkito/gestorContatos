@@ -1,1 +1,27 @@
-<p>pessoa works!</p>
+<a routerLink="/pessoas">Voltar</a>
+<div class="div-pessoa">
+    <label for="id">ID</label> <input readonly id="id" placeholder="" type="number" [(ngModel)]="id">
+    <label for="nome">Nome</label> <input id="nome" placeholder="" type="text" [(ngModel)]="nome">
+    <label for="nomeMeio">Nomeio do Meio</label> <input id="nomeMeio" placeholder="" type="text" [(ngModel)]="nomeMeio">
+    <label for="sobrenome">Sobrenome</label> <input id="sobrenome" placeholder="" type="text" [(ngModel)]="sobrenome">
+    <label for="cpf">CPF</label> <input id="cpf" placeholder="" type="text" [(ngModel)]="cpf">
+    <label for="dataNascimento">Data de Nascimento</label> <input id="dataNascimento" placeholder="" type="date" [(ngModel)]="dataNascimento">
+    <div class="div-pessoa-contatos">
+        <label>Contatos</label>
+        <ul>
+            <li *ngFor="let contato of contatos" (click)="selecionaContato($event)">{{contato.id}} - {{contato.nome}} {{contato.nomeMeio}} {{contato.sobrenome}}</li>
+        </ul>
+        <button (click)="adicionarContato()">Adicionar Contato</button>
+        <button (click)="deleteContato()">Excluir Contato</button>
+    </div>
+    <button (click)="putPessoa()" class="btn-put">Salvar</button>
+    <button (click)="postPessoa()" class="btn-post">Cadastrar</button>
+    <button (click)="deletePessoa()" class="btn-delete">Excluir</button>
+</div>
+<div class="div-adicionar-contato">
+    <select id="idContatos" title="Contatos"> 
+        <option *ngFor="let contato of contatosSemPessoa"> 
+            {{contato.id}} - {{contato.nome}} {{contato.nomeMeio}} {{contato.sobrenome}}
+        </option>
+    </select>
+</div>

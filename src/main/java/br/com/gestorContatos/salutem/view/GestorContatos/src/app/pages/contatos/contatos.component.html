@@ -1,1 +1,44 @@
-<p>contatos works!</p>
+<h2>Contatos</h2>
+<div class="div-filtros">
+    <label for="id">Id</label> <input id="id" min="0" type="number" [(ngModel)]="id" (keydown.enter)="getContatoFiltrado(true)" placeholder="Id">
+    <label for="nome">Nome</label> <input id="nome" type="text" [(ngModel)]="nome" (keydown.enter)="getContatoFiltrado(true)" placeholder="Nome">
+    <label for="nomeMeio">Nome do Meio</label> <input id="nomeMeio" type="text" [(ngModel)]="nomeMeio" (keydown.enter)="getContatoFiltrado(true)" placeholder="Nome do Meio">
+    <label for="sobrenome">Sobrenome</label> <input id="sobrenome" type="text" [(ngModel)]="sobrenome" (keydown.enter)="getContatoFiltrado(true)" placeholder="Sobrenome">
+    <label for="cpf">CPF</label> <input id="cpf" type="text" [(ngModel)]="cpf" (keydown.enter)="getContatoFiltrado(true)" placeholder="CPF">
+    <label for="telefone">Data de Nascimento</label> <input id="telefone" type="tel" [(ngModel)]="telefone" (keydown.enter)="getContatoFiltrado(true)" placeholder="Telefone">
+    <label for="email">Data de Nascimento</label> <input id="email" type="email" [(ngModel)]="email" (keydown.enter)="getContatoFiltrado(true)" placeholder="E-mail">
+    <label for="tamanhoPagina">Pessoas por Página</label> <input id="tamanhoPagina" min="0" type="number" [(ngModel)]="tamanhoPagina" (keydown.enter)="getContatoFiltrado(true)" placeholder="10">
+    <button (click)="getContatoFiltrado(true)">Filtrar</button>
+    <a [routerLink]="['/contatos/contato',0]">Cadastrar Contato</a>
+</div>
+<div class="div-table-pessoas">
+    <table class="table-pessoas">
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Telefone</th>
+            <th>E-Mail</th>
+        </tr>
+        <tr *ngFor="let contato of contatos">
+            <td> {{contato.id}} </td>
+            <td> <a [routerLink]="['/contatos/contato', contato.id]">{{contato.nome}} {{contato.nomeMeio}} {{contato.sobrenome}}</a></td>
+            <td> {{contato.cpf}} </td>
+            <td> {{contato.telefone}} </td>
+            <td> {{contato.email}} </td>
+        </tr>
+    </table>
+</div>
+<div class="div-paginas">
+    <p>&lt;</p>
+    <p class="pagina-p" (click)="irPagina(pagina,$event)" *ngFor="let pagina of paginas; let i = index" [ngClass]="{'pag-sublinhada': pagina == 1}"> 
+        {{pagina}}
+    </p>
+    <p>
+        ... 
+    </p>
+    <p class="pagina-p" (click)="irPagina(paginas[paginas.length -1],$event)">
+        {{paginas[paginas.length -1]}}
+    </p>
+    <p>&gt;</p>
+</div>

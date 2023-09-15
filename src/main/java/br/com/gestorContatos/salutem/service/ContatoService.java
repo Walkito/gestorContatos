@@ -2,7 +2,6 @@ package br.com.gestorContatos.salutem.service;
 
 import br.com.gestorContatos.salutem.Utils;
 import br.com.gestorContatos.salutem.model.entities.Contato;
-import br.com.gestorContatos.salutem.model.entities.Pessoa;
 import br.com.gestorContatos.salutem.model.repositorys.ContatoRepository;
 import br.com.gestorContatos.salutem.model.repositorys.PessoaRepository;
 import br.com.gestorContatos.salutem.model.specifications.ContatoSpecifications;
@@ -32,52 +31,64 @@ public class ContatoService {
         }
     }
 
-    public String updateContato(Long id, Contato contato){
+    public Contato updateContato(Contato contato){
         try {
             if(!Utils.verificarCPF(contato.getCpf())) {
-                return "CPF Inválido";
+                return null;
             }
             if(!Utils.validarEmail(contato.getEmail())){
-                return "E-mail Inválido";
+                return null;
             }
 
-            Contato contatoAtual = repository.searchById(id);
-            BeanUtils.copyProperties(contato, contatoAtual, Utils.getPropriedadesNulas(contato));
-            repository.save(contatoAtual);
-            return "Contato Alterado com Sucesso";
+            Contato contatoAtual = repository.searchById(contato.getId());
+            BeanUtils.copyProperties(contato, contatoAtual, "pessoa");
+            return repository.save(contatoAtual);
         } catch (Exception e){
             throw e;
         }
     }
 
-    public String insertContato(Contato contato){
+    public Contato insertContato(Contato contato){
         try {
-            if(Utils.verificarCPF(contato.getCpf())){
-                if(!Utils.verificarCPF(contato.getCpf())) {
-                    return "CPF Inválido";
-                }
-                if(!Utils.validarEmail(contato.getEmail())){
-                    return "E-mail Inválido";
-                }
-
-                if(contato.getPessoa().getId() !=0){
-                    Pessoa pessoa = pessoaRepository.searchById(contato.getPessoa().getId());
-                    pessoa.setContatos(contato);
-                }
-                repository.save(contato);
-                return "Contato Cadastrado com Sucesso";
-            } else {
-                return "CPF Inválido";
+            if(!Utils.verificarCPF(contato.getCpf())) {
+                return null;
             }
+            if(!Utils.validarEmail(contato.getEmail())){
+                return null;
+            }
+            return repository.save(contato);
         } catch (Exception e){
             throw e;
         }
     }
 
-    public Iterable<Contato> getContatos(int numPagina, int tamanhoPagina){
+    public Iterable<Contato> getContatos(Pageable pagina){
         try {
-            Pageable pagina = Utils.montarPagina(numPagina, tamanhoPagina);
             return repository.findAll(pagina);
+        } catch (Exception e){
+            throw e;
+        }
+    }
+
+    public Iterable<Contato> getContatosSemPessoa(){
+        try {
+            return repository.searchContatosSemPessoa();
+        } catch (Exception e){
+            throw e;
+        }
+    }
+
+    public Optional<Contato> getContatoById(Long id){
+        try {
+            return repository.findById(id);
+        } catch (Exception e){
+            throw e;
+        }
+    }
+
+    public Contato getUltimoIndice(){
+        try {
+            return repository.findTopByOrderByIdDesc();
         } catch (Exception e){
             throw e;
         }
@@ -97,15 +108,15 @@ public class ContatoService {
                 return getContatoUnico("telefone", telefone);
             } else {
                 boolean estaVazio = Utils.verificaParametros(nome, nomeMeio, sobrenome, telefone, email, idPessoa);
+                Pageable pagina = Utils.montarPagina(numPagina, tamanhoPagina);
                 if(!estaVazio){
-                    Pageable pagina = Utils.montarPagina(numPagina, tamanhoPagina);
                     Specification<Contato> specs = ContatoSpecifications.comNome(nome)
                                                 .and(ContatoSpecifications.comNomeMeio(nomeMeio))
                                                 .and(ContatoSpecifications.comSobrenome(sobrenome))
                                                 .and(ContatoSpecifications.comPessoa(idPessoa));
                         return repository.findAll(specs, pagina);
                 } else {
-                    return getContatos(numPagina,tamanhoPagina);
+                    return getContatos(pagina);
                 }
             }
         } catch (Exception e){

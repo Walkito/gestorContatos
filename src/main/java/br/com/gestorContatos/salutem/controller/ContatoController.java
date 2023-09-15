@@ -6,6 +6,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping(path = "/api/contatos")
 public class ContatoController {
@@ -13,22 +15,37 @@ public class ContatoController {
     @Autowired
     ContatoService service;
 
-    @PostMapping(path = "/cadastrar")
-    public String insertContato(@Valid Contato contato){
+    @PostMapping(path = "/contato/cadastrar")
+    public Contato insertContato(@RequestBody @Valid Contato contato){
         return service.insertContato(contato);
     }
 
     @PutMapping(path = "/contato/editar")
-    public String updateContato(@RequestParam(name = "id") Long id, Contato contato){
-        return service.updateContato(id,contato);
+    public Contato updateContato(@RequestBody @Valid Contato contato){
+        return service.updateContato(contato);
     }
 
-    @DeleteMapping(path = "/contato/editar")
+    @DeleteMapping(path = "/contato/excluir")
     public boolean deleteContato(@RequestParam(name = "id") Long id){
         return service.deleteContato(id);
     }
 
     @GetMapping(path = "/contato")
+    public Optional<Contato> getContatoById(@RequestParam(name = "id") Long id){
+        return service.getContatoById(id);
+    }
+
+    @GetMapping(path = "/contato/ultimoId")
+    public Contato getUltimoIndice(){
+        return service.getUltimoIndice();
+    }
+
+    @GetMapping(path = "/semPessoas")
+    public Iterable<Contato> getContatosSemPessoas(){
+        return service.getContatosSemPessoa();
+    }
+
+    @GetMapping
     public Iterable<Contato> getContatoFiltrado(@RequestParam(name = "id", defaultValue = "0") Long id,
                                                 @RequestParam(name = "cpf", required = false) String cpf,
                                                 @RequestParam(name = "nome", required = false) String nome,
@@ -42,12 +59,4 @@ public class ContatoController {
     {
         return service.getContatoFiltrado(id,cpf,nome,nomeMeio,sobrenome,telefone,email,idPessoa, numPagina, tamanhoPagina);
     }
-
-
-    @GetMapping
-    public Iterable<Contato> getContatos(@RequestParam(name = "numPagina", defaultValue = "0") int numPagina,
-                                         @RequestParam(name = "tamanhoPagina", defaultValue = "0") int tamanhoPagina){
-        return service.getContatos(numPagina, tamanhoPagina);
-    }
-
 }

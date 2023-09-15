@@ -1,6 +1,7 @@
 package br.com.gestorContatos.salutem.model.repositorys;
 
 import br.com.gestorContatos.salutem.model.entities.Contato;
+import br.com.gestorContatos.salutem.model.entities.Pessoa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -18,4 +19,9 @@ public interface ContatoRepository extends JpaRepository<Contato, Long>, JpaSpec
     public Optional<Contato> findByEmail(String email);
 
     public Optional<Contato> findByTelefone(String telefone);
+
+    public Contato findTopByOrderByIdDesc();
+
+    @Query("SELECT c FROM Contato c WHERE c.pessoa IS NULL")
+    public Iterable<Contato> searchContatosSemPessoa();
 }

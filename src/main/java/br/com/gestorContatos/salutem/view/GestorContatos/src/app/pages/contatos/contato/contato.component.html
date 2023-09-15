@@ -1,0 +1,13 @@
+<a routerLink="/contatos">Voltar</a>
+<div class="div-pessoa">
+    <label for="id">ID</label> <input readonly id="id" placeholder="Id" type="number" [(ngModel)]="id">
+    <label for="nome">Nome</label> <input id="nome" placeholder="Nome" type="text" [(ngModel)]="nome">
+    <label for="nomeMeio">Nomei do Meio</label> <input id="nomeMeio" placeholder="Nome do Meio" type="text" [(ngModel)]="nomeMeio">
+    <label for="sobrenome">Sobrenome</label> <input id="sobrenome" placeholder="Sobrenome" type="text" [(ngModel)]="sobrenome">
+    <label for="cpf">CPF</label> <input id="cpf" placeholder="CPF" type="text" [(ngModel)]="cpf">
+    <label for="tel">Telefone</label> <input id="telefone" placeholder="Telefone" type="tel" [(ngModel)]="telefone">
+    <label for="email">E-Mail</label> <input id="email" placeholder="E-mail" type="email" [(ngModel)]="email">
+    <button (click)="putContato()" class="btn-put">Salvar</button>
+    <button (click)="postContato()" class="btn-post">Cadastrar</button>
+    <button (click)="deleteContato()" class="btn-delete">Excluir</button>
+</div>

@@ -1,8 +1,11 @@
+import { IContato } from "./IContato";
+
 export interface IPessoa{
-    id?: string,
+    id: string,
     cpf: string,
     nome: string,
-    nomeMeio?: string,
+    nomeMeio: string,
     sobrenome: string,
     dataNascimento: string,
+    contatos: IContato[]
 }
