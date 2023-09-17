@@ -10,7 +10,7 @@ import { IErro } from 'src/app/interfaces/IErro';
   styleUrls: ['./pessoa.component.scss']
 })
 export class PessoaComponent implements OnInit{
-  id: string = "";
+  id: string = "1";
   nome: string = "";
   nomeMeio: string= "";
   sobrenome: string = "";
