@@ -3,6 +3,7 @@ package br.com.gestorContatos.salutem.service;
 import br.com.gestorContatos.salutem.Utils;
 import br.com.gestorContatos.salutem.model.entities.Contato;
 import br.com.gestorContatos.salutem.model.entities.Pessoa;
+import br.com.gestorContatos.salutem.model.exception.ExceptionsCustomizadas;
 import br.com.gestorContatos.salutem.model.repositorys.PessoaRepository;
 import br.com.gestorContatos.salutem.model.specifications.PessoaSpecifications;
 import org.springframework.beans.BeanUtils;
@@ -52,32 +53,32 @@ public class PessoaService {
         }
     }
 
-    public Pessoa insertPessoa(Pessoa pessoa){
+    public Pessoa insertPessoa(Pessoa pessoa) throws ExceptionsCustomizadas {
         try {
             if(!verificarData(pessoa.getDataNascimento())){
-                return new Pessoa();
+                throw new ExceptionsCustomizadas("Data de Nascimento Inválida!");
             }
             if(!Utils.verificarCPF(pessoa.getCpf())) {
-                return new Pessoa();
+                throw new ExceptionsCustomizadas("CPF Inválido!");
             }
             return repository.save(pessoa);
-        } catch (Exception e){
+        } catch (ExceptionsCustomizadas e){
             throw e;
         }
     }
 
-    public Pessoa updatePessoa(Pessoa pessoa){
+    public Pessoa updatePessoa(Pessoa pessoa) throws ExceptionsCustomizadas {
         try {
-            if(!verificarData(pessoa.getDataNascimento())){
-                return null;
-            }
             if(!Utils.verificarCPF(pessoa.getCpf())) {
-                return null;
+                throw new ExceptionsCustomizadas("CPF Inválido!");
             }
-            Pessoa pessoaAtual = repository.searchById(pessoa.getId());
+            if(!verificarData(pessoa.getDataNascimento())){
+                throw new ExceptionsCustomizadas("Data de Nascimento Inválida!");
+            }
 
+            System.out.println("Entrou aki");
+            Pessoa pessoaAtual = repository.searchById(pessoa.getId());
             if (pessoaAtual != null) {
-                BeanUtils.copyProperties(pessoa, pessoaAtual, "contatos");
                 if (pessoa.getContatos() != null) {
                     pessoaAtual.getContatos().removeIf(contato -> !pessoa.getContatos().contains(contato));
                     for (Contato novoContato : pessoa.getContatos()) {
@@ -89,8 +90,9 @@ public class PessoaService {
                     pessoaAtual.getContatos().clear();
                 }
             }
+            BeanUtils.copyProperties(pessoa, pessoaAtual, "contatos");
             return repository.save(pessoaAtual);
-        } catch (Exception e){
+        } catch (ExceptionsCustomizadas e){
             throw e;
         }
     }

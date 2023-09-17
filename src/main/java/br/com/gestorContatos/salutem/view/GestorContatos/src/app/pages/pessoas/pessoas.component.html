@@ -4,11 +4,12 @@
     <label for="nome">Nome</label> <input id="nome" type="text" [(ngModel)]="nome" (keydown.enter)="getPessoaFiltrada(true)" placeholder="Nome">
     <label for="nomeMeio">Nome do Meio</label> <input id="nomeMeio" type="text" [(ngModel)]="nomeMeio" (keydown.enter)="getPessoaFiltrada(true)" placeholder="Nome do Meio">
     <label for="sobrenome">Sobrenome</label> <input id="sobrenome" type="text" [(ngModel)]="sobrenome" (keydown.enter)="getPessoaFiltrada(true)" placeholder="Sobrenome">
+    <br>
     <label for="cpf">CPF</label> <input id="cpf" type="text" [(ngModel)]="cpf" (keydown.enter)="getPessoaFiltrada(true)" placeholder="CPF">
     <label for="dataNascimento">Data de Nascimento</label> <input id="dataNascimento" type="date" [(ngModel)]="dataNascimento" (keydown.enter)="getPessoaFiltrada(true)" placeholder="Data">
     <label for="tamanhoPagina">Pessoas por Página</label> <input id="tamanhoPagina" min="0"  type="number" [(ngModel)]="tamanhoPagina" (keydown.enter)="getPessoaFiltrada(true)" placeholder="10">
     <button (click)="getPessoaFiltrada(true)">Filtrar</button>
-    <a [routerLink]="['/pessoas/pessoa',0]">Cadastrar Pessoa</a>
+    <a [routerLink]="['/pessoas/pessoa',0]" class="btn-cad">Cadastrar Pessoa</a>
 </div>
 <div class="div-table-pessoas">
     <table class="table-pessoas">
@@ -19,7 +20,7 @@
             <th>Data</th>
         </tr>
         <tr *ngFor="let pessoa of pessoas">
-            <td> {{pessoa.id}} </td>
+            <td> <strong>{{pessoa.id}}</strong></td>
             <td> <a [routerLink]="['/pessoas/pessoa', pessoa.id]">{{pessoa.nome}} {{pessoa.nomeMeio}} {{pessoa.sobrenome}}</a></td>
             <td> {{pessoa.cpf}} </td>
             <td> {{pessoa.dataNascimento}} </td>
@@ -27,7 +28,6 @@
     </table>
 </div>
 <div class="div-paginas">
-    <p>&lt;</p>
     <p class="pagina-p" (click)="irPagina(pagina,$event)" *ngFor="let pagina of paginas; let i = index" [ngClass]="{'pag-sublinhada': pagina == 1}"> 
         {{pagina}}
     </p>
@@ -37,5 +37,4 @@
     <p class="pagina-p" (click)="irPagina(paginas[paginas.length -1],$event)">
         {{paginas[paginas.length -1]}}
     </p>
-    <p>&gt;</p>
 </div>

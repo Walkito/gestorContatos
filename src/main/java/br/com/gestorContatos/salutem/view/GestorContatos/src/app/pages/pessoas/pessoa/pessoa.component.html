@@ -1,27 +1,37 @@
-<a routerLink="/pessoas">Voltar</a>
-<div class="div-pessoa">
-    <label for="id">ID</label> <input readonly id="id" placeholder="" type="number" [(ngModel)]="id">
-    <label for="nome">Nome</label> <input id="nome" placeholder="" type="text" [(ngModel)]="nome">
-    <label for="nomeMeio">Nomeio do Meio</label> <input id="nomeMeio" placeholder="" type="text" [(ngModel)]="nomeMeio">
-    <label for="sobrenome">Sobrenome</label> <input id="sobrenome" placeholder="" type="text" [(ngModel)]="sobrenome">
-    <label for="cpf">CPF</label> <input id="cpf" placeholder="" type="text" [(ngModel)]="cpf">
-    <label for="dataNascimento">Data de Nascimento</label> <input id="dataNascimento" placeholder="" type="date" [(ngModel)]="dataNascimento">
+<a routerLink="/pessoas"><img src="assets/seta-esquerda.png" alt="Seta clicável para voltar para a página anterior"></a>
+<h2>Pessoa</h2>
+<div class="div-container">
+    <div class="div-pessoa">
+        <label for="id">ID</label> <input readonly id="id" placeholder="Id" type="number" [(ngModel)]="id">
+        <label for="nome">Nome</label> <input id="nome" placeholder="Nome" type="text" [(ngModel)]="nome">
+        <label for="nomeMeio">Nomeio do Meio</label> <input id="nomeMeio" placeholder="Nome do Meio" type="text" [(ngModel)]="nomeMeio">
+        <label for="sobrenome">Sobrenome</label> <input id="sobrenome" placeholder="Sobrenome" type="text" [(ngModel)]="sobrenome">
+        <label for="cpf">CPF</label> <input id="cpf" placeholder="Nome Meio" type="text" [(ngModel)]="cpf">
+        <label for="dataNascimento">Data de Nascimento</label> <input id="dataNascimento" placeholder="01/01/2001" type="date" [(ngModel)]="dataNascimento">
+    </div>
     <div class="div-pessoa-contatos">
         <label>Contatos</label>
-        <ul>
-            <li *ngFor="let contato of contatos" (click)="selecionaContato($event)">{{contato.id}} - {{contato.nome}} {{contato.nomeMeio}} {{contato.sobrenome}}</li>
-        </ul>
+        <div class="div-pessoa-contatos-items">
+            <ul>
+                <li *ngFor="let contato of contatos" (click)="selecionaContato($event)">{{contato.id}} - {{contato.nome}} {{contato.nomeMeio}} {{contato.sobrenome}}</li>
+            </ul>
+        </div>
+        <div class="div-adicionar-contato">
+            <label>Contatos Disponíveis</label>
+            <select id="idContatos" title="Contatos"> 
+                <option *ngFor="let contato of contatosSemPessoa"> 
+                    {{contato.id}} - {{contato.nome}} {{contato.nomeMeio}} {{contato.sobrenome}}
+                </option>
+            </select>
+        </div>
         <button (click)="adicionarContato()">Adicionar Contato</button>
-        <button (click)="deleteContato()">Excluir Contato</button>
+        <button (click)="deleteContato()" class="btn-delete-contato">Excluir Contato</button>
     </div>
+</div>
+<div class="div-btns">
     <button (click)="putPessoa()" class="btn-put">Salvar</button>
-    <button (click)="postPessoa()" class="btn-post">Cadastrar</button>
     <button (click)="deletePessoa()" class="btn-delete">Excluir</button>
 </div>
-<div class="div-adicionar-contato">
-    <select id="idContatos" title="Contatos"> 
-        <option *ngFor="let contato of contatosSemPessoa"> 
-            {{contato.id}} - {{contato.nome}} {{contato.nomeMeio}} {{contato.sobrenome}}
-        </option>
-    </select>
-</div>
+<button (click)="postPessoa()" class="btn-post">Cadastrar</button>
+    
+    

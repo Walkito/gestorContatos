@@ -1,3 +1,160 @@
+a img{
+    width: 4%;
+    margin: 0 0 0 1%;
+}
+
+input{
+    font-size: 18px;
+}
+
+.div-container{
+    border: 5px solid #1d9add;
+    border-radius: 15px;
+    margin: -2% auto 0 auto;
+    width: 74%;
+}
+
+.div-pessoa{
+    display: inline-block;
+    background-color: #8bc7e7;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 5px solid black;
+    font-size: 18px;
+    margin: 2% 0 2% 7%;
+    padding: 0 10px;
+}
+
+.div-pessoa label{
+    display: block;
+    text-align: center;
+    margin: 4% auto;
+}
+
+.div-pessoa input{
+    display: block;
+    border-radius: 8px;
+    border: 2px black solid;
+    text-align: center;
+    margin: 0 auto 4% auto;
+}
+
+#id{
+    color: gray;
+    width: 15%;
+    text-align: center;
+}
+
+#nome,#sobrenome{
+    width: 45%;
+}
+
+#idContatos{
+    margin-left: 10%;
+}
+
+#cpf{
+    width: 55%;
+}
+
+.div-pessoa-contatos{
+    display: inline-block;
+    background-color: #8bc7e7;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 5px solid black;
+    font-size: 18px;
+    text-align: centers;
+    margin: 0 5% 0 15%;
+    padding: 0px 10px;
+}
+
+.div-pessoa-contatos label{
+    display: block;
+    text-align: center;
+    margin: 2% auto;
+    font-size: 26px;
+}
+
+.div-pessoa-contatos button{
+    display: inline-block;
+    margin: 4% 0 2% 16%;
+}
+
+.div-pessoa-contatos-items{
+    margin: 0 auto;
+    width: 85%;
+    height: 36vh;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    overflow: auto;
+}
+
+.div-pessoa-contatos-items ul{
+    list-style-type: none;
+}
+
+.div-pessoa-contatos-items ul li{
+    background: url('contatoMini.png') no-repeat left center;
+    background-size: 16px;
+    padding-left: 20px;
+    margin: 4% 0 0 -10%;
+}
+
+#idContatos{
+    display: block;
+    margin: 0 auto;
+    border: 2px solid black;
+    border-radius: 2px;
+    font-family: 'Open Sans';
+}
+
 .selecionado{
-    background-color: rgb(147, 236, 236);
+    color: red
+}
+
+.div-btns{
+    display : inline-block;
+    margin: 0 0 0 36%;
+}
+
+.div-btns button{
+    display: inline-block;
+    width: 110px;
+    height: 70px;
+    font-size: 24px;
+    margin-top: 10%;
+    margin-left: 50px;
+    margin-bottom: -15%;
+}
+
+.btn-delete:hover, .btn-delete-contato:hover{
+    background-color: #d84949;
+    color: white;
+    border-color: white;
+}
+
+.btn-post{
+    display: block;
+    width: 140px;
+    height: 70px;
+    font-size: 24px;
+    margin: 0 auto;
+}
+
+button{
+    background-color: white;
+    border-radius: 10px;
+    font-size: 18px;
+    transition: 0.5s;
+    width: 100px;
+    border: 2px solid black;
+}
+
+
+button:hover{
+    background-color: #35bead;
+    color: white;
+    border-color: white;
 }

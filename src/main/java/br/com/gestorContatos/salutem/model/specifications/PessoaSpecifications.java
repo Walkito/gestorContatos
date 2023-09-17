@@ -20,7 +20,7 @@ public class PessoaSpecifications {
     public static Specification<Pessoa> comNomeMeio(String nomeMeio){
         return (root, query, criteriaBuilder) -> {
             if (nomeMeio != null && !nomeMeio.isEmpty()) {
-                return criteriaBuilder.equal(root.get("nomeMeio"), nomeMeio);
+                return criteriaBuilder.like(root.get("nomeMeio"), "%" + nomeMeio + "%");
             } else {
                 return criteriaBuilder.conjunction();
             }

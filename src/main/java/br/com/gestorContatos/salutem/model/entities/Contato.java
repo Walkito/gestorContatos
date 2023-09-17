@@ -28,6 +28,7 @@ public class Contato {
 
     @Column(length = 25, nullable = false)
     @Size(max = 25)
+    @NotBlank
     private String sobrenome;
 
     @Column(length = 11, nullable = false, unique = true)

@@ -1,0 +1,102 @@
+.div-filtros{
+    margin: 0 0 2% 0;
+    background-color: #8bc7e7;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 5px solid black;
+    height: 100px;
+    font-size: 18px;
+}
+
+.div-filtros label{
+    display: inline-block;
+    margin: 20px 1% 0 2%;
+}
+
+.div-filtros input{
+    border-radius: 8px;
+    border: 2px black solid;
+}
+
+button{
+    background-color: white;
+    border-radius: 10px;
+    font-size: 18px;
+    margin: 0 0 0 10px;
+    transition: 0.5s;
+    width: 100px;
+    border: 2px solid black;
+}
+
+button:hover{
+    background-color: #35bead;
+    color: white;
+}
+
+.btn-cad{
+    margin: 0 0 0 20px;
+    background-color: white;
+    border-radius: 10px;
+    border: 2px solid black;
+    padding: 5px;
+    transition: 0.5s;
+}
+
+.btn-cad:hover{
+    background-color: #35bead;
+    color: white;
+}
+
+input{
+    font-size: 18px;
+}
+
+#id{
+    width: 35px;
+    text-align: center;
+}
+
+#tamanhoPagina{
+    width: 35px;
+    text-align: center;
+}
+
+#cpf{
+    width: 10%;
+}
+
+#telefone{
+    width: 10%;
+}
+
+.div-table-contatos{
+    display: flex;
+    justify-content: center;
+}
+
+.div-table-contatos table{
+    border: 2px black solid;
+    border-radius: 10px;
+    font-size: 22px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.div-table-contatos tr:nth-child(even){
+    margin: 0 0 0 0;
+    background-color: #8bc7e7;
+}
+
+.div-table-contatos table th{
+    font-size: 26px;
+}
+
+.div-table-contatos table td{
+    padding: 1px 30px;
+}
+
+.div-paginas {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 -3% 0;
+}

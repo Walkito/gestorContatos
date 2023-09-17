@@ -1,6 +1,7 @@
 package br.com.gestorContatos.salutem.controller;
 
 import br.com.gestorContatos.salutem.model.entities.Pessoa;
+import br.com.gestorContatos.salutem.model.exception.ExceptionsCustomizadas;
 import br.com.gestorContatos.salutem.service.PessoaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,12 +42,12 @@ public class PessoaController {
     }
 
     @PostMapping("/cadastrar")
-    public Pessoa insertPessoa(@RequestBody @Valid Pessoa pessoa){
+    public Pessoa insertPessoa(@RequestBody @Valid Pessoa pessoa) throws ExceptionsCustomizadas {
         return service.insertPessoa(pessoa);
     }
 
     @PutMapping("/pessoa/editar")
-    public Pessoa updatePessoa(@RequestBody @Valid Pessoa pessoa){
+    public Pessoa updatePessoa(@RequestBody @Valid Pessoa pessoa) throws ExceptionsCustomizadas {
         return service.updatePessoa(pessoa);
     }
 

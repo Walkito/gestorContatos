@@ -4,15 +4,16 @@
     <label for="nome">Nome</label> <input id="nome" type="text" [(ngModel)]="nome" (keydown.enter)="getContatoFiltrado(true)" placeholder="Nome">
     <label for="nomeMeio">Nome do Meio</label> <input id="nomeMeio" type="text" [(ngModel)]="nomeMeio" (keydown.enter)="getContatoFiltrado(true)" placeholder="Nome do Meio">
     <label for="sobrenome">Sobrenome</label> <input id="sobrenome" type="text" [(ngModel)]="sobrenome" (keydown.enter)="getContatoFiltrado(true)" placeholder="Sobrenome">
+    <br>
     <label for="cpf">CPF</label> <input id="cpf" type="text" [(ngModel)]="cpf" (keydown.enter)="getContatoFiltrado(true)" placeholder="CPF">
-    <label for="telefone">Data de Nascimento</label> <input id="telefone" type="tel" [(ngModel)]="telefone" (keydown.enter)="getContatoFiltrado(true)" placeholder="Telefone">
-    <label for="email">Data de Nascimento</label> <input id="email" type="email" [(ngModel)]="email" (keydown.enter)="getContatoFiltrado(true)" placeholder="E-mail">
+    <label for="telefone">Telefone</label> <input id="telefone" type="tel" [(ngModel)]="telefone" (keydown.enter)="getContatoFiltrado(true)" placeholder="Telefone">
+    <label for="email">E-Mail</label> <input id="email" type="email" [(ngModel)]="email" (keydown.enter)="getContatoFiltrado(true)" placeholder="E-mail">
     <label for="tamanhoPagina">Pessoas por Página</label> <input id="tamanhoPagina" min="0" type="number" [(ngModel)]="tamanhoPagina" (keydown.enter)="getContatoFiltrado(true)" placeholder="10">
     <button (click)="getContatoFiltrado(true)">Filtrar</button>
-    <a [routerLink]="['/contatos/contato',0]">Cadastrar Contato</a>
+    <a [routerLink]="['/contatos/contato',0]" class="btn-cad">Cadastrar Contato</a>
 </div>
-<div class="div-table-pessoas">
-    <table class="table-pessoas">
+<div class="div-table-contatos">
+    <table class="table-contatos">
         <tr>
             <th>ID</th>
             <th>Nome</th>
@@ -21,7 +22,7 @@
             <th>E-Mail</th>
         </tr>
         <tr *ngFor="let contato of contatos">
-            <td> {{contato.id}} </td>
+            <td> <strong>{{contato.id}}</strong></td>
             <td> <a [routerLink]="['/contatos/contato', contato.id]">{{contato.nome}} {{contato.nomeMeio}} {{contato.sobrenome}}</a></td>
             <td> {{contato.cpf}} </td>
             <td> {{contato.telefone}} </td>

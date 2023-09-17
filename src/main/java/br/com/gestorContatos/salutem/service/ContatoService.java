@@ -2,6 +2,7 @@ package br.com.gestorContatos.salutem.service;
 
 import br.com.gestorContatos.salutem.Utils;
 import br.com.gestorContatos.salutem.model.entities.Contato;
+import br.com.gestorContatos.salutem.model.exception.ExceptionsCustomizadas;
 import br.com.gestorContatos.salutem.model.repositorys.ContatoRepository;
 import br.com.gestorContatos.salutem.model.repositorys.PessoaRepository;
 import br.com.gestorContatos.salutem.model.specifications.ContatoSpecifications;
@@ -31,33 +32,33 @@ public class ContatoService {
         }
     }
 
-    public Contato updateContato(Contato contato){
+    public Contato updateContato(Contato contato) throws ExceptionsCustomizadas {
         try {
             if(!Utils.verificarCPF(contato.getCpf())) {
-                return null;
+                throw new ExceptionsCustomizadas("CPF Inválido");
             }
             if(!Utils.validarEmail(contato.getEmail())){
-                return null;
+                throw new ExceptionsCustomizadas("E-Mail Inválido");
             }
 
             Contato contatoAtual = repository.searchById(contato.getId());
             BeanUtils.copyProperties(contato, contatoAtual, "pessoa");
             return repository.save(contatoAtual);
-        } catch (Exception e){
+        } catch (ExceptionsCustomizadas e){
             throw e;
         }
     }
 
-    public Contato insertContato(Contato contato){
+    public Contato insertContato(Contato contato) throws ExceptionsCustomizadas {
         try {
             if(!Utils.verificarCPF(contato.getCpf())) {
-                return null;
+                throw new ExceptionsCustomizadas("CPF Inválido");
             }
             if(!Utils.validarEmail(contato.getEmail())){
-                return null;
+                throw new ExceptionsCustomizadas("E-Mail Inválido");
             }
             return repository.save(contato);
-        } catch (Exception e){
+        } catch (ExceptionsCustomizadas e){
             throw e;
         }
     }

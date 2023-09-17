@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PessoaService } from '../pessoa/service/pessoa.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IContato } from 'src/app/interfaces/IContato';
+import { IErro } from 'src/app/interfaces/IErro';
 
 @Component({
   selector: 'app-pessoa',
@@ -20,6 +21,8 @@ export class PessoaComponent implements OnInit{
   contatosSemPessoa: IContato[] = [];
 
   posContatosSelecionados: number[] = [];
+
+  erro: string | null = null;
 
   constructor(private service: PessoaService, private route: ActivatedRoute, private router: Router){
   }
@@ -47,9 +50,10 @@ export class PessoaComponent implements OnInit{
         this.cpf = pessoa.cpf;
         this.dataNascimento = pessoa.dataNascimento;
         this.contatos = pessoa.contatos;
+        this.organizarArray(this.contatos);
       },
       error:(error) =>{
-        console.error(error);
+        this.mostrarErros(error);
       }
     }
     )
@@ -61,7 +65,7 @@ export class PessoaComponent implements OnInit{
         this.id = String(Number.parseInt(pessoa.id)+1);
       },
       error: (error) =>{
-        console.error(error);
+        this.mostrarErros(error);
       }
     })
   }
@@ -76,50 +80,63 @@ export class PessoaComponent implements OnInit{
         }
       },
       error: (error) =>{
-        console.error(error);
+        this.mostrarErros(error);
       } 
     })
   }
 
   async postPessoa(){
     const pessoa = this.montarPessoa();
-    this.service.postPessoa(pessoa).subscribe({
-      error: (error) =>{
-        console.error(error);
-      },
-      complete: () => {
-        this.router.navigate(['/pessoas']);
-      }
-    })
+
+    if(this.contatos.length > 0){
+      this.service.postPessoa(pessoa).subscribe({
+        error: (error) =>{
+          this.mostrarErros(error);
+        },
+        complete: () => {
+          this.router.navigate(['/pessoas']);
+          alert("Pessoa Cadastrada Com Sucesso!!!");
+        }
+      })
+    } else{
+      alert("Contato não pode ser vazio");
+    }
   }
 
   async putPessoa(){
     const pessoa = this.montarPessoa();
-    this.service.putPessoa(pessoa).subscribe({
-      error: (error) =>{
-        console.error(error);
-      },
-      complete: () => {
-        this.router.navigate(['/pessoas']);
+
+    if(this.contatos.length > 0){
+      this.service.putPessoa(pessoa).subscribe({
+        error: (error: IErro) =>{
+          this.mostrarErros(error);
+        },
+        complete: () => {
+          this.router.navigate(['/pessoas']);
+          alert("Pessoa Atualizada com Sucesso!!!");
+        }
       }
+      );
+    } else {
+      alert("Contato não pode ser vazio.");
     }
-    );
   }
 
   async deletePessoa(){
     this.service.detePessoa(this.id).subscribe({
       error: (error) =>{
-        console.error(error);
+        this.mostrarErros(error);
       },
       complete: () =>{
         this.router.navigate(['/pessoas']);
+        alert("Pessoa Deletada Com Sucesso!!!");
       }
     })
   }
 
   selecionaContato(evento: Event){
     const elemento = evento.target as HTMLElement;
-    const lista = Array.from(document.querySelectorAll(".div-pessoa-contatos ul li"));
+    const lista = Array.from(document.querySelectorAll(".div-pessoa-contatos-items ul li"));
     const posicaoElemento = lista.indexOf(elemento);
 
     if (elemento.classList.contains('selecionado')) {
@@ -129,6 +146,8 @@ export class PessoaComponent implements OnInit{
       elemento.classList.add('selecionado');
       this.posContatosSelecionados.push(posicaoElemento);
     }
+
+    console.log(elemento.classList);
   }
 
   adicionarContato(){
@@ -138,6 +157,7 @@ export class PessoaComponent implements OnInit{
 
     this.contatos.push(contato);
     this.contatosSemPessoa.splice(indexOption,1);
+    this.organizarArray(this.contatos);
   }
 
   deleteContato(){
@@ -150,7 +170,11 @@ export class PessoaComponent implements OnInit{
         }
       });
     });
-    this.contatosSemPessoa.sort((a,b)=>{
+    this.organizarArray(this.contatosSemPessoa);
+  }
+
+  organizarArray(array: Array<any>){
+    array.sort((a,b) =>{
       return Number(a.id) - Number(b.id);
     })
   }
@@ -179,4 +203,13 @@ export class PessoaComponent implements OnInit{
     }
   }
   
+  mostrarErros(error:IErro){
+    if(error.error.errors != undefined){
+      alert(error.error.errors[0].field + ' ' + error.error.errors[0].defaultMessage);
+    } else if('message' in error.error){
+      alert(error.error.message);
+    } else{
+      alert(error);
+    }
+  }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IContato } from 'src/app/interfaces/IContato';
 import { ContatoService } from './service/contato.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IErro } from 'src/app/interfaces/IErro';
 
 @Component({
   selector: 'app-contato',
@@ -44,7 +45,7 @@ export class ContatoComponent implements OnInit{
         this.email = contato.email;
       },
       error:(error) =>{
-        console.error(error);
+        this.mostrarErros(error);
       }
     }
     )
@@ -56,7 +57,7 @@ export class ContatoComponent implements OnInit{
         this.id = String(Number.parseInt(contato.id)+1);
       },
       error: (error) =>{
-        console.error(error);
+        this.mostrarErros(error);
       }
     })
   }
@@ -74,10 +75,11 @@ export class ContatoComponent implements OnInit{
 
     this.service.postContato(contato).subscribe({
       error: (error) =>{
-        console.error(error);
+        this.mostrarErros(error);
       },
       complete: () => {
         this.router.navigate(['/contatos']);
+        alert("Contato Cadastrado Com Sucesso!!!");
       }
     })
   }
@@ -95,10 +97,11 @@ export class ContatoComponent implements OnInit{
 
     this.service.putContato(contato).subscribe({
       error: (error) =>{
-        console.error(error);
+        this.mostrarErros(error);
       },
       complete: () => {
         this.router.navigate(['/contatos'])
+        alert("Contato Atualizado Com Sucesso!!!");
       }
     }
     );
@@ -107,10 +110,11 @@ export class ContatoComponent implements OnInit{
   async deleteContato(){
     this.service.deteContato(this.id).subscribe({
       error: (error) =>{
-        console.error(error);
+        this.mostrarErros(error);
       },
       complete: () =>{
         this.router.navigate(['/contatos']);
+        alert("Contato Deletado Com Sucesso!!!");
       }
     })
   }
@@ -124,6 +128,16 @@ export class ContatoComponent implements OnInit{
     } else {
       const botao = document.querySelector('.btn-post') as HTMLInputElement;
       botao.style.display = "none";
+    }
+  }
+
+  mostrarErros(error:IErro){
+    if(error.error.errors != undefined){
+      alert(error.error.errors[0].field + ' ' + error.error.errors[0].defaultMessage);
+    } else if('message' in error.error){
+      alert(error.error.message);
+    } else{
+      alert(error);
     }
   }
 }

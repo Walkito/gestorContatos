@@ -11,6 +11,7 @@ import { PessoasComponent } from './pages/pessoas/pessoas.component';
 import { ContatosComponent } from './pages/contatos/contatos.component';
 import { PessoaComponent } from './pages/pessoas/pessoa/pessoa.component';
 import { ContatoComponent } from './pages/contatos/contato/contato.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ContatoComponent } from './pages/contatos/contato/contato.component';
     PessoasComponent,
     ContatosComponent,
     PessoaComponent,
-    ContatoComponent
+    ContatoComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

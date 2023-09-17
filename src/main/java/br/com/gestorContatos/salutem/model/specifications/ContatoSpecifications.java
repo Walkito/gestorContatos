@@ -20,7 +20,7 @@ public class ContatoSpecifications {
             if(nomeMeio.isEmpty() || nomeMeio.equals(null)){
                 return criteriaBuilder.conjunction();
             } else {
-                return criteriaBuilder.equal(root.get("nomeMeio"),nomeMeio);
+                return criteriaBuilder.like(root.get("nomeMeio"), "%" + nomeMeio + "%");
             }
         };
     }

@@ -1,0 +1,31 @@
+ul {
+    list-style-type: none;
+    margin: 0.5% 0 0 5%;
+    padding: 0 0 0 0;
+}
+
+ul li{
+    display: inline-block;
+}
+
+ul li img{
+    width: 50%;
+    transition: 0.5s;
+    border: 5px solid #35bead;
+    border-radius: 50%;
+    padding: 6px;
+}
+
+ul li img:hover{
+    background-color: #71c0b7;
+    border-radius: 25px;
+}
+
+.menu-principal{
+    margin: -5% 3% 0 9%;
+}
+
+.menu-principal ul li:nth-child(2) img{
+    margin: 0 0 0 25%;
+}
+

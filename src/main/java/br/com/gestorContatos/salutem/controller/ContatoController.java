@@ -1,6 +1,7 @@
 package br.com.gestorContatos.salutem.controller;
 
 import br.com.gestorContatos.salutem.model.entities.Contato;
+import br.com.gestorContatos.salutem.model.exception.ExceptionsCustomizadas;
 import br.com.gestorContatos.salutem.service.ContatoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,12 @@ public class ContatoController {
     ContatoService service;
 
     @PostMapping(path = "/contato/cadastrar")
-    public Contato insertContato(@RequestBody @Valid Contato contato){
+    public Contato insertContato(@RequestBody @Valid Contato contato) throws ExceptionsCustomizadas {
         return service.insertContato(contato);
     }
 
     @PutMapping(path = "/contato/editar")
-    public Contato updateContato(@RequestBody @Valid Contato contato){
+    public Contato updateContato(@RequestBody @Valid Contato contato) throws ExceptionsCustomizadas {
         return service.updateContato(contato);
     }
 
